@@ -15,7 +15,7 @@
 %% ==================================================================
 
 -export([
-        get/2, get/3,
+        get/1, get/2, get/3,
         get_stats/1,
         list_cache_servers/0,
         set/3, set/4,
@@ -177,6 +177,10 @@ get_cache_option(Name, Opt) ->
                     default(Opt, Opts)
             end
     end.
+
+-spec get(name()) -> {ok, [value()]}.
+get(Name) ->
+    erl_cache_server:get(Name).
 
 %% @see get/3
 -spec get(name(), key()) ->

@@ -11,6 +11,7 @@
 
 -export([
     start_link/1,
+    get/1,
     get/3,
     is_valid_name/1,
     set/9,
@@ -63,6 +64,10 @@
 -spec start_link(erl_cache:name()) -> {ok, pid()}.
 start_link(Name) ->
     gen_server:start_link({local, Name}, ?MODULE, Name, []).
+
+-spec get(erl_cache:name()) -> {ok, [erl_cache:value()]}.
+get(Name) ->
+    {ok, [V || #cache_entry{value=V} <- ets:tab2list(get_table_name(Name))]}.
 
 -spec get(erl_cache:name(), erl_cache:key(), erl_cache:wait_for_refresh()) ->
     {ok, erl_cache:value()} | {error, not_found}.

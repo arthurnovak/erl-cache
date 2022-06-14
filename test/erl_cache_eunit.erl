@@ -209,6 +209,7 @@ evict_interval() ->
     ?assertEqual(ok, erl_cache:start_cache(?TEST_CACHE2, Opts)),
     erl_cache:set(?TEST_CACHE2, foo, bar),
     erl_cache:set(?TEST_CACHE2, foo2, baz, [{validity, 3000}]),
+    ?assertEqual({ok, [baz, bar]}, erl_cache:get(?TEST_CACHE2)),
     ?assertEqual({ok, bar}, erl_cache:get(?TEST_CACHE2, foo)),
     ?assertEqual({ok, baz}, erl_cache:get(?TEST_CACHE2, foo2)),
     timer:sleep(600),
